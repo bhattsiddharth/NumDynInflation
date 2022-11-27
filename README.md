@@ -37,6 +37,9 @@ If you plan to work with multiple models of inflation, it is recommended you cre
 ex: *quad_dyn_background.py* or *Starobinsky_MS_data_60.0.txt*
 
 
+This code is meant to be pedagogical in nature. In the process of fixing the various parameters, entering suitable initial conditions, etc the user will get a clear understanding of inflationary dynamics. We are developing a much more modular and direct PYTHON package akin to a black box which would allow users to compute specific aspects and predictions of inflationary models without having to traverse through all the dynamics manually. Updates regarding the same will be posted here as and when progress is made.
+
+
 Thank you for taking interest in our work!
 
 For any queries, please contact:
