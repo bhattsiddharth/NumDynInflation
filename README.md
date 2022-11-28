@@ -16,8 +16,7 @@ SciPy 1.9+
 Matplotplib 3.6+  
 
 
-Please make a folder named *data* in the same location as the scripts to save the simulation data in text files. 
-Further, make a directory named *modes* within *data* to save simulation data of each mode of fluctuations.
+Please maintain the same directory structure as in this repository. Ensure that a folder named *data* is in the same location as the scripts to save the simulation data in text files. Further, a directory named *modes* is needed within *data* to save simulation data of each mode of fluctuations.  
 Otherwise, please specify the location where you intend to save the data files wherever required in the scripts.
 
 
