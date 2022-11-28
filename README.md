@@ -8,7 +8,12 @@
 ---
 
 This code is intended to be used as per the procedure detailed in the [article](<arXiv link>) on arXiv. 
-Please ensure that you have the latest versions of the following Python packages: NumPy, SciPy and Matplotlib as well as a TeX distribution of your choice.
+
+The codes given are tested using Ubuntu 20.04 and the following softwares/packages are required:  
+Python 3.10+  
+NumPy 1.23+  
+SciPy 1.9+  
+Matplotplib 3.6+  
 
 
 Please make a folder named *data* in the same location as the scripts to save the simulation data in text files. 
