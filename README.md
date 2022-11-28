@@ -2,7 +2,7 @@
 ---
 ---
 
-# Numerical simulation of inflationary dynamics for PBH formation and beyond
+# Numerical simulation of inflationary dynamics: slow-roll and beyond
 
 ---
 ---
