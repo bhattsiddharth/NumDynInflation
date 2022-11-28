@@ -37,6 +37,8 @@ The script *inf_dyn_MS_full.py* concerns simulation of (background, along with )
 The data for each mode can be saved in files named *inf_MS_data_**Nk**.txt*, where **Nk** corresponds to different modes.  
 
 
+## Other comments
+
 If you plan to work with multiple models of inflation, it is recommended you create separate scripts for each model and specify the same in all filenames for convenience.  
 ex: *quad_dyn_background.py* or *Starobinsky_MS_data_60.0.txt*  
 
