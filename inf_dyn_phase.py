@@ -145,7 +145,7 @@ zi = 3e-3/S
 # The initial Hubble parameter value is kept fixed for all cases
 # We select different values of xi and find the corresponding value of yi
 
-T = np.linspace(0, 1000, 100000)
+T = np.linspace(0, 1000, 1000000)
 
 for j in [-1,1]:
     for xi in np.arange(-10,12,2):
@@ -177,6 +177,9 @@ plt.axvline(0, color='grey')
 plt.axhline(0, color='grey')
 
 ### After you obtain a plot, you can manually set the limits on x and y axes to display the portion of the plot you are 
+
+plt.xlim(-10,10)
+plt.ylim(-7.35e-3, 7.35e-3)
 
 plt.xlabel(r"$\phi/m_p$", fontsize = 22) 
 plt.ylabel(r"$\dot\phi/m_p^2$", fontsize = 24)
