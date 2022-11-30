@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 # The model of inflation is defined in this section
 #########################################################################################################
 
-# This term defines one unit of time 
+# This term defines one unit of time [ T = t * m_p * S ] where t is the actual cosmic time
 S = 5e-5 
 
 
@@ -44,16 +44,27 @@ def d2fdx2(x):
 #########################################################################################################
 
 
-# initial conditions for the given system
-xi = 17.5
-yi = 0
-zi = np.sqrt(yi**2/6 + (v0*f(xi)/(3*S**2)))
-Ai = 1e-3
+### The dynamical variables are defined as follows:
+#
+# x : dimensionless field value [ \phi / m_p ]
+# y : dimensionless field velocity [ dx/dT or \dot\phi / (m_p ^2 * S) ]
+# A : dimensionless scale factor [ a * m_p * S ]
+# z : dimensionless hubble parameter [ H / (S * m_p) ]
+
+
+### initial conditions for the given system
+
+xi = 17.5 # initial field value
+yi = 0 # initial field velocity
+zi = np.sqrt(yi**2/6 + (v0*f(xi)/(3*S**2))) # initial value of hubble parameter
+Ai = 1e-3 # initial value of scale factor
 
 
 # the system of differential equations to be solved
 def sys(var, T):
     [x, y, z, A] = var
+
+    # Note that all derivatives are taken wrt the scaled, dimenstionless cosmic time T
 
     dxdT = y
     dydT = -3*z*y - v0*dfdx(x)/S**2 
@@ -64,33 +75,40 @@ def sys(var, T):
 
 
 # the period of time over which the system is integrated 
-# note: time is in units of S*m_p
+# note: time is in units of S*m_p 
 T = np.linspace(0, 1000, 100000)
 
 
 # invoking the ODE solver
 sol = odeint(sys, [xi,yi,zi,Ai], T, rtol=3e-14, atol=2e-35, mxstep=900000000)
 x, y, z, A = np.transpose(sol)
-phi, vphi, H = x, y*S, z*S
+phi, phi_t, H = x, y*S, z*S
 
 z1 = np.sqrt(y**2/6 + (v0*f(x)/(3*S**2))) # for consistency check
 
-N = np.log(A/Ai)
-Nt = 77.4859 # value needs to be fixed from the behaviour of epsH
-Ne = Nt - N 
 
-aH = A*z
-meff = 2.5*y**2 + 2*y*(-3*z*y - v0*dfdx(x)/S**2 )/z + 2*z**2 + 0.5*y**4/z**2 - v0*d2fdx2(x)/S**2
+### Since the expansion of the universe is expected to be near-exponential, it is convenient to express the evolution of scale factor in terms of the power of e by which it increases (e-folds)
+## The number of e-folds can be used as a time-axis for studying the behaviour of various quantities
+N = np.log(A/Ai) # number of e-folds of expansion elapsed
+Nt = 77.4859 # number of e-folds elapsed when inflation ends (value needs to be fixed from the behaviour of epsH)
+Ne = Nt - N # number of e-folds of expansion remaining before the end of inflation
 
-# slow-roll parameters
-epsH = -(-z**2 + ((v0*f(x)/S**2 - y**2))/3)/z**2
-etaH = -(-3*z*y - v0*dfdx(x)/S**2)/(y*z)
 
-# observable quantities (under slow-roll apparoximation)
-ns = 1 + 2*etaH - 4*epsH
+### We can define other quantities in terms of our main dynamical quantites that provide us useful information about the system
+
+## slow-roll parameters
+epsH = -(-z**2 + ((v0*f(x)/S**2 - y**2))/3)/z**2 # indicated whether the system is in a state of inflation
+etaH = -(-3*z*y - v0*dfdx(x)/S**2)/(y*z) # gives the rate of change of epsH
+
+## observable quantities (under slow-roll apparoximation)
+ns = 1 + 2*etaH - 4*epsH # 
 r = 16*epsH
 Ps = (S*z)**2 / (8 * np.pi**2 * epsH)
 Pt = 2*(S*z)**2 / (np.pi**2)
+
+## These quantities will be useful for studying the dynamics of quantum fluctuations
+aH = A*z # rate of change of scale factor
+meff = 2.5*y**2 + 2*y*(-3*z*y - v0*dfdx(x)/S**2 )/z + 2*z**2 + 0.5*y**4/z**2 - v0*d2fdx2(x)/S**2 # effective mass of fluctuations (time-dependent)
 
 
 
@@ -114,7 +132,7 @@ plt.legend()
 plt.show()
 '''
 ''' # phase behaviour
-plt.plot(phi, vphi, 'r', lw=2)
+plt.plot(phi, phi_t, 'r', lw=2)
 plt.show()
 '''
 #''' # to check if inflation is adequate

@@ -56,6 +56,26 @@ def d2fdx2(x):
 #########################################################################################################
 
 
+### The dynamical variables are defined as follows:
+#
+# background:
+#
+# x : dimensionless field value [ \phi / m_p ]
+# y : dimensionless field velocity [ dx/dT or \dot\phi / (m_p ^2 * S) ]
+# A : dimensionless scale factor [ a * m_p * S ]
+# z : dimensionless hubble parameter [ H / (S * m_p) ]
+#
+#
+# fluctuations:
+#
+# v : real part of the Mukhanov-Sasaki variable [ v_k ] for scalar fluctuations [ \zeta_k ]
+# u : imaginary part of the Mukhanov-Sasaki variable for scalar fluctuations
+# h : real part of the Mukhanov-Sasaki variable for tensor fluctuations
+# g : imaginary part of the Mukhanov-Sasaki variable for tensor fluctuations
+
+
+
+
 ### Select a mode that leaves the horizon a certain number of e-folds before the end of inflation 
 # Note that each mode corresponds to one point in the final power spectrum
 Nk = 60 
@@ -74,21 +94,21 @@ zi = np.sqrt(yi**2/6 + (v0*f(xi)/(3*S**2)))
 Ai = 1e-3 * np.exp(77.4859  - (Nk+5))
 
 # Initial conditions for the fluctuations (in Mukhanov-Sasaki variables) are given by the Bunch-Davies vacuum
-vi = (1/np.sqrt(2*k))
-ui = 0
-vvi = 0
-vui = -k*(1/np.sqrt(2*k))/Ai
+vi = (1/np.sqrt(2*k)) # real part of the field that describes scalar fluctuations
+ui = 0 # imaginary part of the field that describes scalar fluctuations
+v_Ti = 0
+u_Ti = -k*(1/np.sqrt(2*k))/Ai
 # Same applies for tensor fluctuations too
-hi = (1/np.sqrt(2*k))
-gi = 0
-vhi = 0
-vgi = -k*(1/np.sqrt(2*k))/Ai
+hi = (1/np.sqrt(2*k)) # real part of the field that describes tensor fluctuations
+gi = 0 # imaginary part of the field that describes tensor fluctuations
+h_Ti = 0
+g_Ti = -k*(1/np.sqrt(2*k))/Ai
 
 
 
 ### the system of differential equations to be solved
 def sys(var, T):
-    [x, y, z, A, v, vv, u, vu, h, vh, g, vg] = var
+    [x, y, z, A, v, v_T, u, u_T, h, h_T, g, g_T] = var
     
     #background
     dxdT = y
@@ -97,18 +117,18 @@ def sys(var, T):
     dAdT = A*z
 
     # scalar fluctuations
-    dvdT = vv
-    dvvdT = -z*vv + v*(2.5*y**2 + 2*y*(-3*z*y - v0*dfdx(x)/S**2 )/z + 2*z**2 + 0.5*y**4/z**2 - v0*d2fdx2(x)/S**2 - k**2/A**2)
-    dudT = vu
-    dvudT = -z*vu + u*(2.5*y**2 + 2*y*(-3*z*y - v0*dfdx(x)/S**2 )/z + 2*z**2 + 0.5*y**4/z**2 - v0*d2fdx2(x)/S**2 - k**2/A**2)
+    dvdT = v_T
+    dv_TdT = -z*v_T + v*(2.5*y**2 + 2*y*(-3*z*y - v0*dfdx(x)/S**2 )/z + 2*z**2 + 0.5*y**4/z**2 - v0*d2fdx2(x)/S**2 - k**2/A**2)
+    dudT = u_T
+    du_TdT = -z*u_T + u*(2.5*y**2 + 2*y*(-3*z*y - v0*dfdx(x)/S**2 )/z + 2*z**2 + 0.5*y**4/z**2 - v0*d2fdx2(x)/S**2 - k**2/A**2)
     
     # tensor fluctuations
-    dhdT = vh
-    dvhdT = -z*vh - h*(k**2/A**2 - 2*z**2 + 0.5*y**2)
-    dgdT = vg
-    dvgdT = -z*vg - g*(k**2/A**2 - 2*z**2 + 0.5*y**2)
+    dhdT = h_T
+    dh_TdT = -z*h_T - h*(k**2/A**2 - 2*z**2 + 0.5*y**2)
+    dgdT = g_T
+    dg_TdT = -z*g_T - g*(k**2/A**2 - 2*z**2 + 0.5*y**2)
 
-    return [dxdT, dydT, dzdT, dAdT, dvdT, dvvdT, dudT, dvudT, dhdT, dvhdT, dgdT, dvgdT]
+    return [dxdT, dydT, dzdT, dAdT, dvdT, dv_TdT, dudT, du_TdT, dhdT, dh_TdT, dgdT, dg_TdT]
 
 
 # This term defines one unit of time 
@@ -118,8 +138,8 @@ S = 5e-5
 T = np.linspace(0, 200, 10000)
 
 
-sol = odeint(sys, [xi,yi,zi,Ai,vi,vvi,ui,vui,hi,vhi,gi,vgi], T, rtol=3e-14, atol=2e-35, mxstep=900000000)
-x, y, z, A, v, vv, u, vu, h, vh, g, vg = np.transpose(sol)
+sol = odeint(sys, [xi,yi,zi,Ai,vi,v_Ti,ui,u_Ti,hi,h_Ti,gi,g_Ti], T, rtol=3e-14, atol=2e-35, mxstep=900000000)
+x, y, z, A, v, v_T, u, u_T, h, h_T, g, g_T = np.transpose(sol)
 
 N = np.log(A/Ai)
 Nt = 77.4859 
