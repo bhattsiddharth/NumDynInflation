@@ -14,6 +14,7 @@ Python 3.10+
 NumPy 1.23+  
 SciPy 1.9+  
 Matplotplib 3.6+  
+LaTeX
 
 
 Please maintain the same directory structure as in this repository. Ensure that a folder named *data* is in the same location as the scripts to save the simulation data in text files. Further, a directory named *modes* is needed within *data* to save simulation data of each mode of fluctuations.  
