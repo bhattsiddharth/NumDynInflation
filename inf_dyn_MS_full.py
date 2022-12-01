@@ -70,7 +70,7 @@ def d2fdx2(x):
 #
 # v : real part of the Mukhanov-Sasaki variable [ v_k ] for scalar fluctuations [ \zeta_k ]
 # u : imaginary part of the Mukhanov-Sasaki variable for scalar fluctuations
-# h : real part of the Mukhanov-Sasaki variable for tensor fluctuations
+# h : real part of the Mukhanov-Sasaki variable for tensor fluctuations [ h_k ]
 # g : imaginary part of the Mukhanov-Sasaki variable for tensor fluctuations
 
 
