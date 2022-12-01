@@ -29,6 +29,7 @@ The size of the file can be varied by adjusting the number of time steps for sol
 For phase space analysis, it is recommended that you enter the initial conditions as described in the article and save the data for dynamics due to each set of initial conditions separately, labelling the text file with the value of **xi** used.  
 ex: *inf_bg_data_5.0.txt*  
 The different data files, corresponding to different sets of initial conditions can then be plotted in the same plot.  
+If only the plot of phase space behaviour is required, then the script *inf_dyn_phase.py* will generate it. 
 
 
 ## Quantum fluctuations analysis
