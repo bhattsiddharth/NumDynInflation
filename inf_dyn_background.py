@@ -68,7 +68,7 @@ def sys(var, T):
 
     dxdT = y
     dydT = -3*z*y - v0*dfdx(x)/S**2 
-    dzdT = -0.5*y**2 #-z**2 + (v0*f(x)/S**2 - y**2)/3 # 
+    dzdT = -0.5*y**2 # = -z**2 + (v0*f(x)/S**2 - y**2)/3 
     dAdT = A*z
     
     return [dxdT, dydT, dzdT, dAdT]
@@ -84,11 +84,16 @@ sol = odeint(sys, [xi,yi,zi,Ai], T, rtol=3e-14, atol=2e-35, mxstep=900000000)
 x, y, z, A = np.transpose(sol)
 phi, phi_t, H = x, y*S, z*S
 
-z1 = np.sqrt(y**2/6 + (v0*f(x)/(3*S**2))) # for consistency check
+
+### for consistency check
+# We compute the evolution of z in two ways: one by solving the differential equation for z (as done already) and the other by computing x and y and then using their relation to compute z (denoted by z1, as given below)
+#   If our analysis is correct, both the solutions should match exactly. If they don't match then it's an indication that there's a mistake somewhere in the script
+#   This mistake could be due to an incorrect expression in the potential function, system of equations, other expression
+z1 = np.sqrt(y**2 /6 + (v0*f(x)/(3*S**2))) 
 
 
 ### Since the expansion of the universe is expected to be near-exponential, it is convenient to express the evolution of scale factor in terms of the power of e by which it increases (e-folds)
-## The number of e-folds can be used as a time-axis for studying the behaviour of various quantities
+# The number of e-folds can be used as a time-axis for studying the behaviour of various quantities
 N = np.log(A/Ai) # number of e-folds of expansion elapsed
 Nt = 77.4859 # number of e-folds elapsed when inflation ends (value needs to be fixed from the behaviour of epsH)
 Ne = Nt - N # number of e-folds of expansion remaining before the end of inflation
@@ -159,8 +164,8 @@ plt.show()
 # Uncomment this after the values of all parameters have been fixed
 #########################################################################################################
 
-np.savetxt('data/inf_bg_data.txt',np.c_[T,N,Ne,x,y,z,aH,epsH,etaH,meff,Ps,Pt])
-print('\n\t--- Data saved successfully : inf_bg_data.txt ---\n')
+#np.savetxt('data/inf_bg_data.txt',np.c_[T,N,Ne,x,y,z,aH,epsH,etaH,meff,Ps,Pt])
+#print('\n\t--- Data saved successfully : inf_bg_data.txt ---\n')
 
 #########################################################################################################
 #########################################################################################################
