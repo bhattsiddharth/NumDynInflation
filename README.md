@@ -7,7 +7,7 @@
 ---
 ---
 
-This code is intended to be used as per the procedure detailed in the [article](<arXiv link>) on arXiv. 
+This code is intended to be used as per the procedure detailed in the [article](https://arxiv.org/abs/2212.00529) on arXiv. 
 
 The codes given are tested using Ubuntu 20.04 and the following softwares/packages are required:  
 Python 3.10+  
