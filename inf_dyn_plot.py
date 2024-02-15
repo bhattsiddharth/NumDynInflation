@@ -349,6 +349,10 @@ if switch == 3: # to plot power spectrum
     def i(Ne):
         return np.max(np.where(data1[:,0]<=Ne))
 
+    #In order to plot power spectrum wrt k instead of Ne
+    def k(Ne):
+        return 0.05 * np.exp(60 - Ne) 
+
     #plt.plot(data[:,0], data[:,1], 'go', label='Scalar (numerical)')
     plt.plot(data1[:,2], data1[:,10], 'g-', lw=4 , label='Scalar (slow-roll)')
 
