@@ -55,4 +55,7 @@ bhattsid24@gmail.com
 or
 swagatam18@gmail.com
 
+## Copyright information
+Numerical simulations of inflationary dynamics: slow roll and beyond © 2022 by Siddharth Bhatt, Swagat Mishra, Soumen Basak and Surya Sahoo is licensed under Creative Commons Attribution 4.0 International 
+
 ---
